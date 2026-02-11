@@ -28,9 +28,7 @@ df["release_on_netlix_diference"] = df["year_added"] - df["release_year"] # cria
 #2.0 - Análise exploratória dos dados
 
 #2.1 - Visualização da quantidade de filmes e séries na Netflix
-novoDf = df["type"].value_counts().reset_index()
-novoDf.columns = ["type", "count"]
-
+novoDf = df["type"].groupby(df["type"]).size().reset_index(name="count")
 novoDf.plot(
     x = "type",
     y = "count",
@@ -47,10 +45,10 @@ plt.tight_layout()
 # plt.show()
 
 #2.2 - Visualização da quantidade de lançamentos por ano
-novoDf2 = df["release_year"].value_counts().reset_index()
-novoDf2.columns = ["release_year", "count"]
+novoDf2 = df["year_added"].groupby(df["year_added"]).size().sort_index().reset_index(name="count")
+
 novoDf2.plot(
-    x = "release_year",
+    x = "year_added",
     y = "count",
     kind = "line",
     marker = "o",
@@ -59,10 +57,10 @@ novoDf2.plot(
     legend=False
 )
 plt.xlabel("Ano de lançamento", fontsize= 12, fontweight= "bold")
-plt.ylabel("Quantidade de lançamentos", fontsize= 12, fontweight= "bold")
+plt.ylabel("Quantidade de lançamentos na Netlix", fontsize= 12, fontweight= "bold")
 plt.grid(True)
-plt.yticks(range(0, 1000, 100))
-plt.xticks(range(1940, 2025, 5), rotation=45, ha = 'right')
+plt.yticks(range(0, novoDf2["count"].max() +100, 100))
+plt.xticks(range(2005, 2025, 1), rotation=45, ha = 'right')
 plt.tight_layout()
 plt.show()
 
