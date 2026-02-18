@@ -2,6 +2,8 @@
 import pandas 
 import datetime
 import matplotlib.pyplot as plt
+from itertools import combinations
+from collections import Counter
 #criando o dataframe
 df = pandas.read_csv("netflix_titless.csv")
 
@@ -111,7 +113,7 @@ plt.xticks(rotation=45, ha="right")
 plt.tight_layout()
 # plt.show()
 
-
+#Top 10 países com mais títulos na Netflix por tipo
 types_by_Country = df.groupby(["country","type"])["show_id"].nunique().unstack().fillna(0)
 types_by_Country["total"]= types_by_Country.sum(axis=1)
 types_by_Country.sort_values(by="total", ascending=False).head(10).drop(columns="total").plot(
@@ -124,4 +126,76 @@ plt.ylabel("Quantidade de títulos", fontsize=12, fontweight="bold")
 plt.xticks(rotation=45, ha="right")
 plt.legend(["Filmes", "Séries"], loc="upper right")
 plt.tight_layout()
+# plt.show()
+
+#Visualização de crescimento da quantidade de titulos adicionados por pais
+added_by_country_per_year = df.groupby(["country", "year_added"])["show_id"].nunique().unstack("year_added").fillna(0)
+top10 = added_by_country_per_year.assign(total= added_by_country_per_year.sum(axis=1)).nlargest(10, "total").drop(columns="total")
+top10.T.plot(
+    kind="line",
+    marker="o"
+)
+plt.xlabel("Ano", fontsize=12, fontweight="bold")
+plt.ylabel("Total Adicionado", fontsize=12, fontweight= "bold")
+plt.tight_layout()
+plt.grid()
+# plt.show()
+
+#Classificação por genero de conteudo
+titles_by_gender = df.groupby("listed_in")["show_id"].nunique().reset_index(name="count")
+topGender = titles_by_gender.nlargest(10, "count")
+
+topGender.plot(
+    x="listed_in",
+    y="count",
+    title="Top gêneros de conteúdo",
+    kind="bar",
+    legend=False
+)
+plt.xlabel("Gênero", fontsize=12, fontweight="bold")
+plt.ylabel("Quantidade de titulos", fontsize=12, fontweight="bold")
+plt.tight_layout()
+plt.xticks(rotation=45, ha="right")
+# plt.show()
+
+#Grafico de preferencia por tipo de genero de conteudo 
+gender_by_year = df.groupby(["listed_in", "year_added"])["show_id"].nunique().unstack().fillna(0).astype(int)
+top10 = gender_by_year.assign(total=gender_by_year.sum(axis=1)).nlargest(10, "total")
+top10.drop(columns="total", inplace=True)
+top10.T.plot(
+    kind="line",
+    marker="o",
+    title="Quantidade de conteudo adicionado por gênero"
+)
+plt.xlabel("Ano", fontsize=12, fontweight="bold")
+plt.ylabel("Quantidade", fontsize=12, fontweight="bold")
+plt.legend(loc="upper left")
+plt.yticks(range(0, 800, 50))
+plt.tight_layout()
+plt.grid()
+# plt.show()
+
+#Ranking das combinações de gêneros no dataframe
+combination_gender = df.groupby("title")["listed_in"].apply(list).reset_index(name="combination")
+combination_gender["combination"] = combination_gender["combination"].apply(
+    lambda x: list(combinations(x, 2))
+)
+all_combination = [comb for sublist in combination_gender["combination"] for comb in sublist]
+
+cont_freq = Counter(all_combination)
+
+
+dataFrameCombination = pandas.DataFrame(cont_freq.items(), columns=["gender", "count"]).sort_values(by="count", ascending=False)
+
+dataFrameCombination.head(10).plot(
+    x= "gender",
+    y="count",
+    title="Ranking de Combinações de Gênero",
+    kind="bar"
+)
+plt.xlabel("Combinação", fontsize=12, fontweight= "bold")
+plt.ylabel("Quantidade", fontsize=12, fontweight= "bold")
+plt.tight_layout()
 plt.show()
+
+
