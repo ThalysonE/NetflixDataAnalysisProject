@@ -40,10 +40,10 @@ novoDf.plot(
     legend= False,
     width = 0.2,
 )
-plt.xlabel("Tipo", fontsize= 12, fontweight= "bold")
-plt.ylabel("Quantidade", fontsize= 12, fontweight= "bold")
-plt.yticks(range(0, 6000, 500))
-plt.tight_layout()
+# plt.xlabel("Tipo", fontsize= 12, fontweight= "bold")
+# plt.ylabel("Quantidade", fontsize= 12, fontweight= "bold")
+# plt.yticks(range(0, 6000, 500))
+# plt.tight_layout()
 # plt.show()
 
 
@@ -69,13 +69,13 @@ novoDf2.plot(
     color = "green",
     legend=False
 )
-plt.xlabel("Ano de lançamento", fontsize= 12, fontweight= "bold")
-plt.ylabel("Quantidade de lançamentos na Netlix", fontsize= 12, fontweight= "bold")
-plt.grid(True)
-plt.yticks(range(0, novoDf2["count"].max() +100, 100))
-plt.xticks(range(2005, 2025, 1), rotation=45, ha = 'right')
-plt.tight_layout()
-plt.axvline(peak_year, linestyle= "--")
+# plt.xlabel("Ano de lançamento", fontsize= 12, fontweight= "bold")
+# plt.ylabel("Quantidade de lançamentos na Netlix", fontsize= 12, fontweight= "bold")
+# plt.grid(True)
+# plt.yticks(range(0, novoDf2["count"].max() +100, 100))
+# plt.xticks(range(2005, 2025, 1), rotation=45, ha = 'right')
+# plt.tight_layout()
+# plt.axvline(peak_year, linestyle= "--")
 # plt.show()
 
 #2.3 - Visualização da quantidade de títulos adicionados por mês
@@ -90,9 +90,9 @@ titles_add_by_month.plot(
     legend=False,
     title = "Quantidade de titulos adicionados por mes"
 )
-plt.xlabel("Mês de adição", fontsize= 12, fontweight= "bold")
-plt.ylabel("Quantidade de títulos adicionados", fontsize= 12, fontweight= "bold")
-plt.tight_layout()
+# plt.xlabel("Mês de adição", fontsize= 12, fontweight= "bold")
+# plt.ylabel("Quantidade de títulos adicionados", fontsize= 12, fontweight= "bold")
+# plt.tight_layout()
 # plt.show() 
 
 #2.4 - Top 10 países com mais títulos na Netflix
@@ -107,10 +107,10 @@ titles_by_contry.head(10).plot(
     legend=False
 )
 
-plt.xlabel("País", fontsize= 12, fontweight= "bold")
-plt.ylabel("Quantidade de títulos", fontsize=12, fontweight="bold")
-plt.xticks(rotation=45, ha="right")
-plt.tight_layout()
+# plt.xlabel("País", fontsize= 12, fontweight= "bold")
+# plt.ylabel("Quantidade de títulos", fontsize=12, fontweight="bold")
+# plt.xticks(rotation=45, ha="right")
+# plt.tight_layout()
 # plt.show()
 
 #Top 10 países com mais títulos na Netflix por tipo
@@ -121,11 +121,11 @@ types_by_Country.sort_values(by="total", ascending=False).head(10).drop(columns=
     title="Top 10 países com mais títulos na Netflix por tipo",
     color=["orange", "blue"],
 )
-plt.xlabel("País", fontsize=12, fontweight="bold")
-plt.ylabel("Quantidade de títulos", fontsize=12, fontweight="bold")
-plt.xticks(rotation=45, ha="right")
-plt.legend(["Filmes", "Séries"], loc="upper right")
-plt.tight_layout()
+# plt.xlabel("País", fontsize=12, fontweight="bold")
+# plt.ylabel("Quantidade de títulos", fontsize=12, fontweight="bold")
+# plt.xticks(rotation=45, ha="right")
+# plt.legend(["Filmes", "Séries"], loc="upper right")
+# plt.tight_layout()
 # plt.show()
 
 #Visualização de crescimento da quantidade de titulos adicionados por pais
@@ -135,10 +135,10 @@ top10.T.plot(
     kind="line",
     marker="o"
 )
-plt.xlabel("Ano", fontsize=12, fontweight="bold")
-plt.ylabel("Total Adicionado", fontsize=12, fontweight= "bold")
-plt.tight_layout()
-plt.grid()
+# plt.xlabel("Ano", fontsize=12, fontweight="bold")
+# plt.ylabel("Total Adicionado", fontsize=12, fontweight= "bold")
+# plt.tight_layout()
+# plt.grid()
 # plt.show()
 
 #Classificação por genero de conteudo
@@ -152,10 +152,10 @@ topGender.plot(
     kind="bar",
     legend=False
 )
-plt.xlabel("Gênero", fontsize=12, fontweight="bold")
-plt.ylabel("Quantidade de titulos", fontsize=12, fontweight="bold")
-plt.tight_layout()
-plt.xticks(rotation=45, ha="right")
+# plt.xlabel("Gênero", fontsize=12, fontweight="bold")
+# plt.ylabel("Quantidade de titulos", fontsize=12, fontweight="bold")
+# plt.tight_layout()
+# plt.xticks(rotation=45, ha="right")
 # plt.show()
 
 #Grafico de preferencia por tipo de genero de conteudo 
@@ -167,12 +167,12 @@ top10.T.plot(
     marker="o",
     title="Quantidade de conteudo adicionado por gênero"
 )
-plt.xlabel("Ano", fontsize=12, fontweight="bold")
-plt.ylabel("Quantidade", fontsize=12, fontweight="bold")
-plt.legend(loc="upper left")
-plt.yticks(range(0, 800, 50))
-plt.tight_layout()
-plt.grid()
+# plt.xlabel("Ano", fontsize=12, fontweight="bold")
+# plt.ylabel("Quantidade", fontsize=12, fontweight="bold")
+# plt.legend(loc="upper left")
+# plt.yticks(range(0, 800, 50))
+# plt.tight_layout()
+# plt.grid()
 # plt.show()
 
 #Ranking das combinações de gêneros no dataframe
@@ -184,7 +184,6 @@ all_combination = [comb for sublist in combination_gender["combination"] for com
 
 cont_freq = Counter(all_combination)
 
-
 dataFrameCombination = pandas.DataFrame(cont_freq.items(), columns=["gender", "count"]).sort_values(by="count", ascending=False)
 
 dataFrameCombination.head(10).plot(
@@ -193,9 +192,69 @@ dataFrameCombination.head(10).plot(
     title="Ranking de Combinações de Gênero",
     kind="bar"
 )
-plt.xlabel("Combinação", fontsize=12, fontweight= "bold")
-plt.ylabel("Quantidade", fontsize=12, fontweight= "bold")
+# plt.xlabel("Combinação", fontsize=12, fontweight= "bold")
+# plt.ylabel("Quantidade", fontsize=12, fontweight= "bold")
+# plt.tight_layout()
+# plt.show()
+
+
+#Distribuição das classificações
+
+rating_count = df.groupby("rating")["show_id"].nunique().reset_index(name="count").sort_values(by="count", ascending=False)
+
+rating_count.plot(
+    x="rating",
+    y="count",
+    title="Distribuição das classificações",
+    legend=False,
+    kind="bar",
+    color="red"
+
+)
+# plt.xlabel("Tipo de classificação", fontsize=12, fontweight="bold")
+# plt.ylabel("Quantidade de conteudo", fontsize=12, fontweight="bold")
+# plt.tight_layout()
+# plt.show()
+
+
+#Relação de rating e tipo de conteudo
+
+type_rating = df.groupby(["type", "rating"])["show_id"].nunique().unstack().fillna(0)
+
+type_rating.plot(
+    kind="bar",
+    title="Relaçao de ranting e type",
+    width=2
+)
+
+# plt.xlabel("Tipo de conteúdo", fontsize=12, fontweight="bold")
+# plt.ylabel("Quantidade", fontsize=12, fontweight="bold")
+# plt.legend(loc="center left", bbox_to_anchor=(1, 0.5))
+# plt.yticks(range(0, 2200, 100))
+# plt.tight_layout()
+# plt.show()
+
+#Publico alvo predonimante
+
+def type_rating(rating):
+    if rating in ["TV-MA", "R", "NC-17"]:
+        return "Adult"
+    elif rating in ["TV-14", "PG-13", "TV-PG"]:
+        return "Teen"
+    elif rating in ["TV-Y", "TV-Y7", "G", "PG"]:
+        return "Kids"
+    
+df["audience_category"] = df["rating"].apply(type_rating)
+
+valueCounts = df.groupby("audience_category")["show_id"].nunique().reset_index(name="count")
+valueCounts.plot(
+    x="audience_category",
+    y="count",
+    kind="bar",
+    color="green",
+    title="Distribuição de conteúdo por categoria",
+)
+plt.xlabel("Categoria", fontsize=12, fontweight="bold")
+plt.ylabel("Quantidade", fontsize=12, fontweight="bold")
 plt.tight_layout()
 plt.show()
-
-
