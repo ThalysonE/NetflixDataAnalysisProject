@@ -14,13 +14,19 @@ df["date_added"] = pandas.to_datetime(df["date_added"].str.strip() ,errors="coer
 
 
 # 1.2 - Tratando colunas com múltiplos valores separados por vírgula
+def formatandoDuracao(duration):
+    if pandas.notna(duration): 
+        min = int(duration.split(" ")[0])
+        return min
+    return 0
+df["duration"] = df["duration"].apply(formatandoDuracao)
+
 df["country"] = df["country"].str.split(", ")
 df = df.explode("country").reset_index(drop=True) # separando os países em linhas diferentes
 df["listed_in"] = df["listed_in"].str.split(", ")
 df = df.explode("listed_in").reset_index(drop=True) # separando os gêneros em linhas diferentes
 df["cast"] = df["cast"].str.split(", ")
 df = df.explode("cast").reset_index(drop=True) # separando os atores em linhas diferentes
-
 # 1.3 - Criando colunas auxiliares
 df["year_added"] = df["date_added"].dt.year # criando uma nova coluna com o ano de adição
 df["month_added"] = df["date_added"].dt.month # criando uma nova coluna com
@@ -257,4 +263,24 @@ valueCounts.plot(
 plt.xlabel("Categoria", fontsize=12, fontweight="bold")
 plt.ylabel("Quantidade", fontsize=12, fontweight="bold")
 plt.tight_layout()
+# plt.show()
+
+#Dados sobre duração
+duration = df.drop_duplicates(subset=["show_id"])
+mediaDuration = round(duration["duration"].mean(), 2)
+print(f"Media de duração dos filmes: {mediaDuration}")
+
+#tendencia temporal de duração
+duration_by_year = df.groupby(["type","year_added"])["duration"].mean().unstack()
+print(duration_by_year)
+duration_by_year.T.plot(
+    kind="line",
+    marker="o",
+    title="Média de duração de conteúdo adicionados na Netlix"
+)
+
+plt.xlabel("Ano", fontsize=12, fontweight="bold")
+plt.ylabel("Média de duração", fontsize=12, fontweight="bold")
+plt.tight_layout()
+plt.grid()
 plt.show()
